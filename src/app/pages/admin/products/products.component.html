@@ -1,0 +1,102 @@
+<div class="row grilla">
+  <div [ngClass]="isSidePanelVisible ? 'col-8' : 'col-12'">
+    <div class="card card-100">
+      <div class="card-header bg-dark text-light">
+        <div class="row">
+          <div class="col-6">Product List</div>
+          <div class="col-6 text-end">
+            <button class="btn btn-sm btn-warning" (click)="openSidePanel()">
+              New
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-3" *ngFor="let product of productList">
+            <div class="card mb-3">
+              <img
+                class="card-img-top"
+                [src]="product.images"
+                alt="Card image"
+              />
+              <div class="card-body">
+                <h4 class="card-title">{{ product.title }}</h4>
+                <p class="card-text">{{ product.category.name }}</p>
+                <a href="#" class="btn btn-secondary">See Profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    @if(isSidePanelVisible){
+    <div class="card">
+      <div class="card-header bg-dark text-light">
+        <div class="row">
+          <div class="col-6">New Product</div>
+          <div class="col-6 text-end">
+            <button class="btn btn-sm btn-danger" (click)="closeSidePanel()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <label for="">Name</label>
+            <input
+              type="text"
+              [(ngModel)]="productObj.title"
+              class="form-control"
+            />
+          </div>
+          <div class="col-6">
+            <label for="">Price</label>
+            <input
+              type="text"
+              [(ngModel)]="productObj.price"
+              class="form-control"
+            />
+          </div>
+          <div class="col-6">
+            <label for="">Images</label>
+            <input
+              type="text"
+              [(ngModel)]="productObj.images"
+              class="form-control"
+            />
+          </div>
+          <div class="col-6">
+            <label for="">Category Id</label>
+            <input
+              type="text"
+              [(ngModel)]="productObj.categoryId"
+              class="form-control"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="">Description</label>
+            <textarea
+              type="text"
+              [(ngModel)]="productObj.description"
+              class="form-control"
+            ></textarea>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-success" (click)="onSave()">
+              Create Product
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-warning">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
