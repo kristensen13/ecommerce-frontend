@@ -1,0 +1,89 @@
+<div class="row mt-5">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">User Profile</h4>
+        <h6 class="card-subtitle">Settings</h6>
+        <form
+          class="form pt-3"
+          [formGroup]="profileForm"
+          (submit)="updateProfile()"
+        >
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="bi bi-person"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Username"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              formControlName="name"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">
+              <i class="bi bi-envelope"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              aria-label="Email"
+              aria-describedby="basic-addon2"
+              formControlName="email"
+              [readOnly]="user!.google"
+            />
+          </div>
+          <div class="d-grid gap-2 mt-5">
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              [disabled]="profileForm.invalid"
+            >
+              <i class="fas fa-save"> </i>
+              &nbsp; Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Avatar</h4>
+        <h6 class="card-subtitle">User Image</h6>
+        <div class="d-flex justify-content-center">
+          @if(!imgTemp){
+          <img [src]="user!.imageUrl" class="img-avatar mb-4" />
+          } @if(imgTemp){
+          <img [src]="imgTemp" class="img-avatar mb-4" />
+          }
+        </div>
+
+        <!-- <img [src]="user!.imageUrl" class="img-avatar" /> -->
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            (change)="changeImage($event)"
+            class="form-control"
+            id="inputGroupFile02"
+          />
+        </div>
+        <div class="d-grid gap-2 mt-5">
+          <button
+            class="btn btn-secondary"
+            type="button"
+            [disabled]="!uploadImage"
+            (click)="imageUpload()"
+          >
+            <i class="fas fa-save"> </i>
+            &nbsp; Update Image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

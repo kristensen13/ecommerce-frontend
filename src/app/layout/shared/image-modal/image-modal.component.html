@@ -1,0 +1,61 @@
+<div
+  class="modal-background-image hidden"
+  [class.hidden]="imageModalSvc.hiddenModal"
+>
+  <div
+    class="modal fade show"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel1"
+    style="display: block; padding-right: 15.9953px"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel1">Load Image</h4>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="closeModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <h3>Select Image</h3>
+          <div class="d-flex justify-content-center">
+            @if(!imgTemp){
+            <img [src]="imageModalSvc.img" class="img-avatar mb-4" />
+            } @if(imgTemp){
+            <img [src]="imgTemp" class="img-avatar mb-4" />
+            }
+          </div>
+
+          <!-- <img [src]="user!.imageUrl" class="img-avatar" /> -->
+          <div class="input-group mb-3">
+            <input
+              type="file"
+              (change)="changeImage($event)"
+              class="form-control"
+              id="inputGroupFile02"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" (click)="imageUpload()">
+            Load Image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
