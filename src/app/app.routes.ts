@@ -27,6 +27,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+        data: { title: 'Dashboard' },
         loadComponent: () =>
           import('./layout/admin/pages/dashboard/dashboard.component').then(
             (c) => c.DashboardComponent
@@ -34,6 +35,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
+        data: { title: 'Profile' },
         loadComponent: () =>
           import('./layout/shared/profile/profile.component').then(
             (c) => c.ProfileComponent
@@ -41,6 +43,7 @@ export const routes: Routes = [
       },
       {
         path: 'products',
+        data: { title: 'Products' },
         loadComponent: () =>
           import('./layout/admin/pages/products/products.component').then(
             (c) => c.ProductsComponent
@@ -48,6 +51,7 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
+        data: { title: 'Categories' },
         loadComponent: () =>
           import('./layout/admin/pages/categories/categories.component').then(
             (c) => c.CategoriesComponent
@@ -55,6 +59,7 @@ export const routes: Routes = [
       },
       {
         path: 'users',
+        data: { title: 'Users' },
         loadComponent: () =>
           import('./layout/admin/pages/users/users.component').then(
             (c) => c.UsersComponent
@@ -62,6 +67,7 @@ export const routes: Routes = [
       },
       {
         path: 'orders',
+        data: { title: 'Orders' },
         loadComponent: () =>
           import('./layout/admin/pages/orders/orders.component').then(
             (c) => c.OrdersComponent
@@ -69,6 +75,7 @@ export const routes: Routes = [
       },
       {
         path: 'customers',
+        data: { title: 'Customers' },
         loadComponent: () =>
           import('./layout/admin/pages/customers/customers.component').then(
             (c) => c.CustomersComponent
@@ -78,6 +85,7 @@ export const routes: Routes = [
       // Maintenances
       {
         path: 'maintenances/users',
+        data: { title: 'Users maintenance' },
         loadComponent: () =>
           import(
             './layout/admin/pages/maintenances/users/users.component'
@@ -85,6 +93,7 @@ export const routes: Routes = [
       },
       {
         path: 'maintenances/stores',
+        data: { title: 'Stores maintenance' },
         loadComponent: () =>
           import(
             './layout/admin/pages/maintenances/stores/stores.component'
@@ -92,10 +101,19 @@ export const routes: Routes = [
       },
       {
         path: 'maintenances/employees',
+        data: { title: 'Employees maintenance' },
         loadComponent: () =>
           import(
             './layout/admin/pages/maintenances/employees/employees.component'
           ).then((c) => c.EmployeesComponent),
+      },
+      {
+        path: 'maintenances/employee/:id',
+        data: { title: 'Employee maintenance' },
+        loadComponent: () =>
+          import(
+            './layout/admin/pages/maintenances/employees/employee.component'
+          ).then((c) => c.EmployeeComponent),
       },
     ],
   },

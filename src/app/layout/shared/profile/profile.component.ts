@@ -13,11 +13,12 @@ import Swal from 'sweetalert2';
 import { AdminTypes } from '../../../enums/admin';
 import { UserService } from '../../admin/services/user.service';
 import { UploadFileService } from '../../admin/services/upload-file.service';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })

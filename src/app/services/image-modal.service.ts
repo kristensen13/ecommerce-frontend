@@ -9,7 +9,7 @@ const base_url = environment.BASE_URL;
 })
 export class ImageModalService {
   private _hiddenModal: boolean = true;
-  public type: AdminTypes = AdminTypes.users;
+  public type!: AdminTypes;
   public id: string = '';
   public img: string = '';
 

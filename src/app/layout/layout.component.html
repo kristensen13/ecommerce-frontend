@@ -82,6 +82,7 @@
                   routerLinkActive="active"
                   [routerLink]="submenu.link"
                   routerLinkActive="router-link-active"
+                  (click)="closeSidebar()"
                 >
                   &nbsp; {{ submenu.title }}
                 </a>
@@ -96,7 +97,7 @@
           <li class="nav-item py-2 px-3">
             <a
               class="nav-link fas fa-sign-out-alt cursor px-3"
-              (click)="logout()"
+              (click)="logout(); closeSidebar()"
             >
               Logout
             </a>
@@ -109,7 +110,7 @@
     </div>
   </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid pad-all">
   <router-outlet />
 </div>
 <app-image-modal />

@@ -1,0 +1,103 @@
+<div class="row mt-5">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Employee</h4>
+        <h6 class="card-subtitle">Update Info</h6>
+        <form
+          class="form-horizontal"
+          [formGroup]="employeeForm"
+          (submit)="saveEmployee()"
+        >
+          @if(selectedEmployee){
+          <div class="form-group row mt-3">
+            <!-- <label for="exampleInputuname3" class="col-sm-3 control-label"
+              >Foto</label
+            > -->
+            <div>
+              <div class="input-group image-container">
+                <img
+                  [src]="selectedEmployee.img! | image : imagePipeTypeEmployees"
+                  alt=""
+                  class="avatar-header cursor"
+                />
+              </div>
+            </div>
+          </div>
+          }
+          <div class="form-group row mt-4">
+            <label for="exampleInputuname3" class="col-sm-3 control-label mt-1"
+              >Name</label
+            >
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control"
+                  placeholder="Name of the employee"
+                  aria-label="Name"
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mt-3">
+            <label for="exampleInputEmail3" class="col-sm-3 control-label my-1"
+              >Store</label
+            >
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="fas fa-store"></i>
+                </span>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  formControlName="store"
+                >
+                  <option value="" selected>Select a Store</option>
+                  <option *ngFor="let store of stores" [value]="store._id">
+                    {{ store.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mt-4 mb-2">
+            <div class="d-grid gap-2">
+              <button
+                class="btn btn-secondary"
+                type="submit"
+                [disabled]="employeeForm.invalid"
+              >
+                <i class="fas fa-save"></i>
+                &nbsp; Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  @if(selectedStore){
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Store</h4>
+        <h6 class="card-subtitle">{{ selectedStore.name }}</h6>
+        <div class="image-container mt-3">
+          <img
+            [src]="selectedStore.img! | image : imagePipeTypeStores"
+            alt=""
+            class="img-thumbnail cursor"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

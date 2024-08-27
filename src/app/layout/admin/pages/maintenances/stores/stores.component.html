@@ -1,1 +1,112 @@
-<p>stores works!</p>
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search Store"
+            aria-label="Search Store"
+            (keyup)="search(searchTerm.value)"
+            #searchTerm
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+&nbsp; @if(loading){
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="alert alert-dark text-center">
+      <h4 class="alert-heading">Loading</h4>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-secondary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <p class="mb-0">Please wait</p>
+    </div>
+  </div>
+</div>
+} @else if(!loading){
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-8">
+            <h4 class="card-title">Total Stores ({{ stores.length }})</h4>
+            <h6 class="card-subtitle">Registered stores in the application</h6>
+          </div>
+          <div class="col mt-2">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary" (click)="createStore()">
+                <i class="fas fa-store"></i>
+                &nbsp; Create New Store
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100 text-center">Image</th>
+                <th class="text-center">Name</th>
+                <th class="text-nowrap w100 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let store of stores">
+                <td class="text-center">
+                  <img
+                    [src]="store.img! | image : imagePipeType"
+                    [alt]="store.name"
+                    class="avatar cursor"
+                    (click)="openModal(store)"
+                  />
+                </td>
+                <td class="align-middle">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Store Name"
+                    [(ngModel)]="store.name"
+                  />
+                </td>
+
+                <td class="text-nowrap d-flex justify-content-evenly">
+                  <a
+                    (click)="saveChanges(store)"
+                    data-toggle="tooltip"
+                    data-original-title="Save Changes"
+                    class="cursor"
+                  >
+                    <i class="fa fa-pencil text-dark mt-3"></i>
+                  </a>
+                  <a
+                    (click)="deleteStore(store)"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                    class="cursor"
+                  >
+                    <i class="fa fa-close text-danger mt-3"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- @if(searchTerm.value.length === 0){
+        <button class="btn btn-secondary">Anteriores</button>
+        &nbsp;
+        <button class="btn btn-secondary">Siguientes</button>
+        } -->
+      </div>
+    </div>
+  </div>
+</div>
+}

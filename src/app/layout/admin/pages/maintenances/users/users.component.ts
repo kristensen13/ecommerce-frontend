@@ -7,8 +7,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { SearchesService } from '../../../services/searches.service';
 import { UserService } from '../../../services/user.service';
 import { ImageModalService } from '../../../../../services/image-modal.service';
-import { Subscription } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Subscription, delay } from 'rxjs';
+// import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   public loading: boolean = true;
   public users: User[] = [];
   public tempUsers: User[] = [];
-  public imgSubs: Subscription = new Subscription();
+  public imgSubs!: Subscription;
   public totalUsers: number = 0;
   public from: number = 0;
 

@@ -27,9 +27,19 @@ body{
   width: 140px;
 }
 
+.w200{
+  width: 200px;
+}
+
 .avatar{
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+}
+
+.avatar-header{
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
 }
 
@@ -45,4 +55,34 @@ z-index: 9999;
 
 .hidden{
   display: none;
+}
+
+.pad-all{
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+
+/* Padding para pantallas más grandes (tabletas y dispositivos más pequeños) */
+@media (max-width: 1024px) {
+  .pad-all {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* Padding para pantallas de móviles (dispositivos más pequeños) */
+@media (max-width: 768px) {
+  .pad-all {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.image-container {
+  text-align: center; /* Centra la imagen horizontalmente */
+}
+
+.image-container img {
+  display: block;
+  margin: 0 auto; /* Asegura que la imagen esté centrada */
 }

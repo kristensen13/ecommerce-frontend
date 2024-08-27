@@ -8,14 +8,16 @@
             type="search"
             placeholder="Search User"
             aria-label="Search User"
+            (keyup)="search(searchTerm.value)"
+            #searchTerm
           />
         </form>
       </div>
     </div>
   </div>
 </div>
-&nbsp;
-<div class="row animated fadeIn fast" *ngIf="cargando">
+&nbsp; @if(loading){
+<div class="row animated fadeIn fast">
   <div class="col-12">
     <div class="alert alert-dark text-center">
       <h4 class="alert-heading">Loading</h4>
@@ -28,7 +30,7 @@
     </div>
   </div>
 </div>
-
+} @else if(!loading){
 <div class="row">
   <div class="col-12">
     <div class="card">
@@ -42,8 +44,8 @@
                 <th class="w100 text-center">Avatar</th>
                 <th class="text-center">Email</th>
                 <th class="text-center">Name</th>
-                <th class="w100 text-center">Role</th>
-                <th class="w100 text-center">Status</th>
+                <th class="w140 text-center">Role</th>
+                <th class="w100 text-center">Auth</th>
                 <th class="text-nowrap w100 text-center">Actions</th>
               </tr>
             </thead>
@@ -53,28 +55,39 @@
                   <img
                     [src]="user.imageUrl"
                     alt="user"
-                    class="img-avatar avatar"
+                    class="img-avatar avatar cursor"
+                    (click)="openModal(user)"
                   />
                 </td>
                 <td class="text-center align-middle">{{ user.email }}</td>
                 <td class="text-center align-middle">{{ user.name }}</td>
-                <td class="text-center align-middle">{{ user.role }}</td>
+                <td class="text-center align-middle">
+                  <select
+                    class="form-select"
+                    [(ngModel)]="user.role"
+                    (change)="changeRole(user)"
+                  >
+                    <option value="ADMIN_ROLE">Admin</option>
+                    <option value="USER_ROLE">User</option>
+                  </select>
+                </td>
                 <td class="text-center align-middle">
                   @if(user.google){
                   <span class="badge bg-danger">Google</span>
                   } @else{
-                  <span class="badge bg-dark">Email</span>
+                  <span class="badge bg-primary">Email</span>
                   }
                 </td>
 
                 <td class="text-nowrap d-flex justify-content-evenly">
                   <a href="#" data-toggle="tooltip" data-original-title="Edit">
-                    <i class="fa fa-pencil text-inverse mt-3"></i>
+                    <i class="fa fa-pencil text-dark mt-3"></i>
                   </a>
                   <a
-                    href="#"
                     data-toggle="tooltip"
                     data-original-title="Delete"
+                    class="cursor"
+                    (click)="deleteUser(user)"
                   >
                     <i class="fa fa-close text-danger mt-3"></i>
                   </a>
@@ -83,6 +96,7 @@
             </tbody>
           </table>
         </div>
+        @if(searchTerm.value.length === 0){
         <button (click)="changeFrom(-5)" class="btn btn-secondary">
           Anteriores
         </button>
@@ -90,28 +104,30 @@
         <button (click)="changeFrom(5)" class="btn btn-secondary">
           Siguientes
         </button>
+        }
         <!-- <nav aria-label="...">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link text-bg-dark" (click)="changeFrom(-5)"
-                >Previous</a
-              >
-            </li>
-            <li class="page-item">
-              <a class="page-link text-bg-light" href="#">1</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-              <a class="page-link text-bg-light" href="#">2</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link text-bg-light" href="#">3</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link text-bg-dark" (click)="changeFrom(5)">Next</a>
-            </li>
-          </ul>
-        </nav> -->
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link text-bg-dark" (click)="changeFrom(-5)"
+                  >Previous</a
+                >
+              </li>
+              <li class="page-item">
+                <a class="page-link text-bg-light" href="#">1</a>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link text-bg-light" href="#">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-bg-light" href="#">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link text-bg-dark" (click)="changeFrom(5)">Next</a>
+              </li>
+            </ul>
+          </nav> -->
       </div>
     </div>
   </div>
 </div>
+}

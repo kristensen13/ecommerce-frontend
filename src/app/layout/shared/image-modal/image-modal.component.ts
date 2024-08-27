@@ -39,8 +39,6 @@ export class ImageModalComponent {
   imageUpload() {
     const id = this.imageModalSvc.id;
     const type = this.imageModalSvc.type;
-    // console.log('id', id);
-    // console.log('type', type);
 
     this.uploadFileSvc
       .uploadFile(this.uploadImage!, type, id)

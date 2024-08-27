@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
+import { Offcanvas } from 'bootstrap';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { NgFor, SlicePipe } from '@angular/common';
@@ -21,9 +22,10 @@ import { UserService } from './admin/services/user.service';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
-export class LayoutComponent {
+export class LayoutComponent implements AfterViewInit {
   private userSvc = inject(UserService);
   private sidebarSvc = inject(SidebarService);
+  private offcanvasElement: Offcanvas | null = null;
 
   menuItems: any[];
   public user: User | undefined;
@@ -32,8 +34,28 @@ export class LayoutComponent {
     this.menuItems = this.sidebarSvc.menu;
     this.user = this.userSvc.user;
   }
+  ngAfterViewInit(): void {
+    const offcanvasElement = document.getElementById('mynavbar');
+    if (offcanvasElement) {
+      this.offcanvasElement = new Offcanvas(offcanvasElement);
+    }
+  }
+
+  closeSidebar() {
+    if (this.offcanvasElement) {
+      this.offcanvasElement.hide();
+    }
+    this.removeAllBackdrops(); // Eliminar todos los backdrops
+  }
+
+  private removeAllBackdrops() {
+    document.querySelectorAll('.offcanvas-backdrop').forEach((backdrop) => {
+      backdrop.remove();
+    });
+  }
 
   logout() {
     this.userSvc.logout();
+    this.closeSidebar();
   }
 }
