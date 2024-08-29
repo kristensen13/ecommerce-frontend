@@ -8,12 +8,12 @@ import { SearchesService } from '../../../services/searches.service';
 import { UserService } from '../../../services/user.service';
 import { ImageModalService } from '../../../../../services/image-modal.service';
 import { Subscription, delay } from 'rxjs';
-// import { delay } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgIf, NgFor, FormsModule, RouterLink],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -29,11 +29,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   public from: number = 0;
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.getUsers();
     this.imgSubs = this.imageModalSvc.newImage
       .pipe(delay(100))
       .subscribe((img) => {
-        this.loadUsers();
+        this.getUsers();
       });
   }
 
@@ -41,7 +41,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.imgSubs.unsubscribe();
   }
 
-  loadUsers() {
+  getUsers() {
     this.loading = true;
     this.userSvc.loadUsers(this.from).subscribe(({ total, users }) => {
       this.totalUsers = total;
@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     } else if (this.from > this.totalUsers) {
       this.from -= value;
     }
-    this.loadUsers();
+    this.getUsers();
   }
 
   search(term: string) {
@@ -100,7 +100,7 @@ export class UsersComponent implements OnInit, OnDestroy {
               `User ${user.name} deleted successfully`,
               'success'
             );
-            this.loadUsers();
+            this.getUsers();
           },
           error: (err) => {
             Swal.fire('Error', err.error.msg, 'error');
@@ -121,6 +121,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  //TODO: Implement the editUser method
 
   openModal(user: User) {
     this.imageModalSvc.openModal(AdminTypes.users, user.uid, user.img);

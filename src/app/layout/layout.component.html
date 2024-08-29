@@ -1,59 +1,76 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
-    <a
-      class="navbar-brand"
-      routerLink="/dashboard"
-      routerLinkActive="router-link-active"
-    >
-      <img
-        [src]="user!.imageUrl"
-        referrerpolicy="no-referrer"
-        alt="Avatar Logo"
-        style="width: 60px"
-        class="rounded-pill"
-      />
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#mynavbar"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="mynavbar">
-      <div class="offcanvas-header" data-bs-theme="dark">
+    <div class="d-flex align-items-center">
+      <button
+        class="navbar-toggler me-2"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mynavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a
+        class="navbar-brand d-flex align-items-center"
+        routerLink="/dashboard"
+        routerLinkActive="router-link-active"
+      >
         <img
           [src]="user!.imageUrl"
           referrerpolicy="no-referrer"
-          alt="Avatar Logo"
-          style="width: 60px"
+          alt="User Image"
           class="rounded-pill"
+          style="width: 50px; margin-left: 20px"
         />
-        <ul>
-          <li>
-            <h4 class="offcanvas-title">{{ user!.name }}</h4>
-          </li>
-          <li>
-            <h6 class="offcanvas-title">
-              {{ user!.email | slice : 0 : 20
-              }}{{ user!.email.length > 20 ? "..." : "" }}
-            </h6>
-          </li>
-        </ul>
+      </a>
+    </div>
 
-        <button
+    <form class="d-flex ms-auto" role="search" (submit)="search(txtTerm.value)">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        #txtTerm
+      />
+    </form>
+
+    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="mynavbar">
+      <div class="offcanvas-header mt-3" data-bs-theme="dark">
+        <div class="list-group mx-auto">
+          <a
+            href="#"
+            class="list-group-item list-group-item-action d-flex align-items-center"
+            aria-current="true"
+          >
+            <img
+              [src]="user!.imageUrl"
+              referrerpolicy="no-referrer"
+              alt="User Image"
+              class="rounded-pill"
+              style="width: 60px; margin-right: 15px"
+            />
+            <div class="d-flex flex-column">
+              <h5 class="mb-1 title-user">{{ user.name }}</h5>
+              <p class="mb-1 lead">
+                {{ user!.email | slice : 0 : 20
+                }}{{ user!.email.length > 20 ? "..." : "" }}
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- <button
           type="button"
           class="btn-close"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
-        ></button>
+        ></button> -->
       </div>
       <hr />
       <div class="offcanvas-body">
         <ul class="navbar-nav me-auto">
           <li
-            *ngFor="let item of menuItems"
+            *ngFor="let item of sidebarSvc.menu as MenuItem"
             class="nav-item dropdown py-2 px-3"
           >
             <a
@@ -61,12 +78,13 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
               routerLinkActive="active"
-              [routerLink]="item.link"
               routerLinkActive="router-link-active"
             >
-              <span class="cursor"> &nbsp; {{ item.title }} </span>
+              <span class="cursor space-letter"> &nbsp; {{ item.title }} </span>
 
-              <span class="label label-rouded label-themecolor pull-roght">
+              <span
+                class="label label-rouded label-themecolor pull-roght space-letter"
+              >
                 &nbsp; ({{ item.submenu.length }})
               </span>
             </a>
@@ -84,7 +102,11 @@
                   routerLinkActive="router-link-active"
                   (click)="closeSidebar()"
                 >
-                  &nbsp; {{ submenu.title }}
+                  <span
+                    class="label label-rouded label-themecolor pull-roght space-letter"
+                  >
+                    &nbsp; {{ submenu.title }}
+                  </span>
                 </a>
               </li>
             </ul>
@@ -96,21 +118,18 @@
         <div class="navbar-nav">
           <li class="nav-item py-2 px-3">
             <a
-              class="nav-link fas fa-sign-out-alt cursor px-3"
+              class="nav-link fas fa-sign-out-alt cursor px-3 space-letter"
               (click)="logout(); closeSidebar()"
             >
               Logout
             </a>
           </li>
         </div>
-        <!-- <li class="nav-item py-2 px-3"> -->
-
-        <!-- </li> -->
       </div>
     </div>
   </div>
 </nav>
 <div class="container-fluid pad-all">
-  <router-outlet />
+  <router-outlet></router-outlet>
 </div>
-<app-image-modal />
+<app-image-modal></app-image-modal>

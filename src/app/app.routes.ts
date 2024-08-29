@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -20,17 +21,27 @@ export const routes: Routes = [
       ),
   },
   {
-    path: '',
+    path: 'dashboard',
     loadComponent: () =>
-      import('./layout/layout.component').then((c) => c.LayoutComponent),
+      import('./layout/admin/pages/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
     canActivate: [authGuard],
     children: [
+      // {
+      //   path: 'dashboard',
+      //   data: { title: 'Dashboard' },
+      //   loadComponent: () =>
+      //     import('./layout/admin/pages/dashboard/dashboard.component').then(
+      //       (c) => c.DashboardComponent
+      //     ),
+      // },
       {
-        path: 'dashboard',
-        data: { title: 'Dashboard' },
+        path: 'search/:term',
+        data: { title: 'Search' },
         loadComponent: () =>
-          import('./layout/admin/pages/dashboard/dashboard.component').then(
-            (c) => c.DashboardComponent
+          import('./layout/admin/pages/search/search.component').then(
+            (c) => c.SearchComponent
           ),
       },
       {
@@ -83,14 +94,7 @@ export const routes: Routes = [
       },
 
       // Maintenances
-      {
-        path: 'maintenances/users',
-        data: { title: 'Users maintenance' },
-        loadComponent: () =>
-          import(
-            './layout/admin/pages/maintenances/users/users.component'
-          ).then((c) => c.UsersComponent),
-      },
+
       {
         path: 'maintenances/stores',
         data: { title: 'Stores maintenance' },
@@ -108,12 +112,23 @@ export const routes: Routes = [
           ).then((c) => c.EmployeesComponent),
       },
       {
-        path: 'maintenances/employee/:id',
+        path: 'employee/:id',
         data: { title: 'Employee maintenance' },
         loadComponent: () =>
           import(
             './layout/admin/pages/maintenances/employees/employee.component'
           ).then((c) => c.EmployeeComponent),
+      },
+
+      // Admin routes
+      {
+        path: 'maintenances/users',
+        canActivate: [adminGuard],
+        data: { title: 'Users maintenance' },
+        loadComponent: () =>
+          import(
+            './layout/admin/pages/maintenances/users/users.component'
+          ).then((c) => c.UsersComponent),
       },
     ],
   },

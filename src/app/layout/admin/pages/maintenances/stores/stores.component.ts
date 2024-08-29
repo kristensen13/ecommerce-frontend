@@ -9,7 +9,6 @@ import { ImagePipe } from '../../../../../pipes/image.pipe';
 import { PipesModule } from '../../../../../pipes/pipes.module';
 import Swal from 'sweetalert2';
 import { ImageModalService } from '../../../../../services/image-modal.service';
-// import { delay } from 'rxjs/operators';
 import { Subscription, delay } from 'rxjs';
 
 @Component({

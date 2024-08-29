@@ -45,10 +45,10 @@
           <div class="col mt-2">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <button
-                class="btn btn-primary"
+                class="btn btn-secondary"
                 routerLink="/maintenances/employee/new"
               >
-                <i class="fas fa-store"></i>
+                <i class="fas fa-user-plus"></i>
                 &nbsp; Create New Employee
               </button>
             </div>
@@ -78,7 +78,7 @@
 
                 <td class="text-nowrap d-flex justify-content-evenly">
                   <a
-                    [routerLink]="['/maintenances/employee', employee._id]"
+                    [routerLink]="['/dashboard/employee', employee._id]"
                     data-toggle="tooltip"
                     data-original-title="Save Changes"
                     class="cursor"

@@ -2,8 +2,8 @@
   <div class="col-md-6">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Employee</h4>
-        <h6 class="card-subtitle">Update Info</h6>
+        <h4 class="card-title text-center">Employee</h4>
+        <h6 class="card-subtitle text-center">Update Info</h6>
         <form
           class="form-horizontal"
           [formGroup]="employeeForm"
@@ -87,8 +87,8 @@
   <div class="col-md-6">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Store</h4>
-        <h6 class="card-subtitle">{{ selectedStore.name }}</h6>
+        <h4 class="card-title text-center">Store</h4>
+        <h6 class="card-subtitle text-center">{{ selectedStore.name }}</h6>
         <div class="image-container mt-3">
           <img
             [src]="selectedStore.img! | image : imagePipeTypeStores"

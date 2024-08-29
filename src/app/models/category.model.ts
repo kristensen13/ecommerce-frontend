@@ -1,11 +1,3 @@
-interface _Category {
-  id: string;
-  name: string;
-  image: string;
-  creationAt: Date;
-  updatedAt: Date;
-}
-
 export class Category {
   constructor(
     public id: string,

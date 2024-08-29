@@ -8,6 +8,8 @@ import { LoadUsers } from '../../../interfaces/load-users.interface';
 import { LoginForm } from '../../../interfaces/login-form.interface';
 import { RegisterForm } from '../../../interfaces/register-form.interface';
 import { User } from '../../../models/user.model';
+import { LocalStorageService } from './local-storage.service';
+import { ChargeUserResponse } from '../../../interfaces/charge-users.interface';
 
 declare const google: any;
 const base_url = environment.BASE_URL;
@@ -18,11 +20,16 @@ const base_url = environment.BASE_URL;
 export class UserService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private localStorageSvc = inject(LocalStorageService);
   public user!: User;
   private googleEmail = '';
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return this.localStorageSvc.getItem('token') || '';
+  }
+
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role! || 'USER_ROLE';
   }
 
   get uid(): string {
@@ -31,46 +38,46 @@ export class UserService {
 
   get headers() {
     return {
-      'x-token': this.token,
+      headers: {
+        'x-token': this.token,
+      },
     };
   }
 
+  saveLocalStorage(token: string, menu: any) {
+    this.localStorageSvc.setItem('token', token);
+    this.localStorageSvc.setItem('menu', JSON.stringify(menu));
+  }
+
   logout() {
+    //TODO: delete menu
     if (this.user.google === true) {
       this.googleEmail = this.user.email;
       google.accounts.id.revoke(this.googleEmail, () => {
-        localStorage.removeItem('token');
+        this.localStorageSvc.removeItem('token');
+        this.localStorageSvc.removeItem('menu');
         this.router.navigateByUrl('/login');
       });
     } else {
-      localStorage.removeItem('token');
+      this.localStorageSvc.removeItem('token');
+      this.localStorageSvc.removeItem('menu');
       this.router.navigateByUrl('/login');
-
-      // google.accounts.id.revoke('2bitstechnology@gmail.com', () => {
-      //   this.router.navigateByUrl('/login');
-      // });
     }
   }
 
   validateToken(): Observable<boolean> {
-    return this.http
-      .get(`${base_url}/login/renew`, {
-        headers: {
-          'x-token': this.token || '',
-        },
+    return this.http.get(`${base_url}/login/renew`, this.headers).pipe(
+      map((resp: any) => {
+        const { name, email, img = '', google, role, uid } = resp.user;
+        this.user = new User(name, email, '', img, google, role, uid);
+        this.saveLocalStorage(resp.token, resp.menu);
+        return true;
+      }),
+      catchError(() => {
+        // localStorage.removeItem('token');
+        return of(false);
       })
-      .pipe(
-        map((resp: any) => {
-          const { name, email, img = '', role, google, uid } = resp.user;
-          this.user = new User(name, email, '', img, role, google, uid);
-          localStorage.setItem('token', resp.token);
-          return true;
-        }),
-        catchError(() => {
-          // localStorage.removeItem('token');
-          return of(false);
-        })
-      );
+    );
   }
 
   getUsers() {
@@ -82,22 +89,20 @@ export class UserService {
   createUser(formData: RegisterForm) {
     return this.http.post(`${base_url}/users`, formData).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        this.saveLocalStorage(resp.token, resp.menu);
       })
     );
   }
 
   updateProfile(data: { name: string; email: string; role?: string }) {
     data = { ...data, role: this.user.role };
-    return this.http.put(`${base_url}/users/${this.uid}`, data, {
-      headers: this.headers,
-    });
+    return this.http.put(`${base_url}/users/${this.uid}`, data, this.headers);
   }
 
   login(formData: LoginForm) {
     return this.http.post(`${base_url}/login`, formData).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        this.saveLocalStorage(resp.token, resp.menu);
       })
     );
   }
@@ -105,14 +110,14 @@ export class UserService {
   loginGoogle(token: string) {
     return this.http.post(`${base_url}/login/google`, { token }).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        this.saveLocalStorage(resp.token, resp.menu);
       })
     );
   }
 
   loadUsers(from: number = 0) {
     const url = `${base_url}/users?from=${from}`;
-    return this.http.get<LoadUsers>(url, { headers: this.headers }).pipe(
+    return this.http.get<LoadUsers>(url, this.headers).pipe(
       map((resp) => {
         const users = resp.users.map(
           (user) =>
@@ -136,11 +141,11 @@ export class UserService {
 
   deleteUser(user: User) {
     const url = `${base_url}/users/${user.uid}`;
-    return this.http.delete(url, { headers: this.headers });
+    return this.http.delete(url, this.headers);
   }
 
   saveUser(user: User) {
     const url = `${base_url}/users/${user.uid}`;
-    return this.http.put(url, user, { headers: this.headers });
+    return this.http.put(url, user, this.headers);
   }
 }

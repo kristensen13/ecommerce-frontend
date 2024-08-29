@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Store } from '../../../models/store.model';
 import { User } from '../../../models/user.model';
 import { ChargeStoresResponse } from '../../../interfaces/charge-stores.interface';
+import { LocalStorageService } from './local-storage.service';
 
 const base_url = environment.BASE_URL;
 
@@ -13,10 +14,11 @@ const base_url = environment.BASE_URL;
 })
 export class StoreService {
   private http = inject(HttpClient);
+  private localStorageSvc = inject(LocalStorageService);
   public user?: User;
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return this.localStorageSvc.getItem('token') || '';
   }
 
   get uid(): string {

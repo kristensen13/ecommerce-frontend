@@ -1,18 +1,9 @@
-interface _Product {
+interface _Category {
   id: string;
-  title: string;
-  price: 2499;
-  description: string;
-  images: [];
+  name: string;
+  image: string;
   creationAt: Date;
   updatedAt: Date;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    creationAt: Date;
-    updatedAt: Date;
-  };
 }
 
 export class Product {
@@ -21,15 +12,9 @@ export class Product {
     public title: string,
     public price: number,
     public description: string,
-    public images: [],
+    public images: string[],
     public creationAt: Date,
     public updatedAt: Date,
-    public category: {
-      id: number;
-      name: string;
-      image: string;
-      creationAt: Date;
-      updatedAt: Date;
-    }
+    public category: _Category
   ) {}
 }

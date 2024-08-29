@@ -1,0 +1,110 @@
+<div class="row mt-4">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Users</h3>
+        @if(users.length === 0){
+        <div class="alert alert-dark">
+          <p class="mb-0">User not found with that term</p>
+        </div>
+        }@else if(users.length > 0){
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>
+                  <img
+                    [src]="user.img! | image : imagePipeTypeUser"
+                    alt="avatar"
+                    class="img-avatar-search"
+                  />
+                </td>
+                <td class="align-middle">{{ user.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Stores</h3>
+        @if(stores.length === 0){
+        <div class="alert alert-dark">
+          <p class="mb-0">Store not found with that term</p>
+        </div>
+        }@else if(stores.length > 0){
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let store of stores">
+                <td>
+                  <img
+                    [src]="store.img! | image : imagePipeTypeStore"
+                    alt="avatar"
+                    class="img-avatar-search"
+                  />
+                </td>
+                <td class="align-middle">{{ store.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Employees</h3>
+        @if(employees.length === 0){
+        <div class="alert alert-dark">
+          <p class="mb-0">Employee not found with that term</p>
+        </div>
+        }@else if(employees.length > 0){
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of employees">
+                <td>
+                  <img
+                    [src]="employee.img! | image : imagePipeTypeEmployee"
+                    alt="avatar"
+                    class="img-avatar-search cursor"
+                    [routerLink]="['/dashboard/employee', employee._id]"
+                  />
+                </td>
+                <td class="align-middle">
+                  {{ employee.name }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

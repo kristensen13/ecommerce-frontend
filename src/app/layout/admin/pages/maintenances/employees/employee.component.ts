@@ -73,7 +73,7 @@ export class EmployeeComponent implements OnInit {
           });
         },
         error: () => {
-          this.router.navigateByUrl('/maintenances/employees');
+          this.router.navigateByUrl('/dashboard/maintenances/employees');
         },
       });
   }
@@ -101,7 +101,9 @@ export class EmployeeComponent implements OnInit {
       };
       this.employeeSvc.updateEmployee(data).subscribe((resp) => {
         Swal.fire('Success', `Employee ${name} has been updated`, 'success');
-        this.router.navigateByUrl(`/maintenances/employee/${data._id}`);
+        this.router.navigateByUrl(
+          `/dashboard/maintenances/employee/${data._id}`
+        );
       });
     } else {
       this.employeeSvc.createEmployee(this.employeeForm.value).subscribe({
@@ -109,7 +111,7 @@ export class EmployeeComponent implements OnInit {
           console.log(resp);
           Swal.fire('Success', `Employee ${name} has been created`, 'success');
           this.router.navigateByUrl(
-            `/maintenances/employee/${resp.employee._id}`
+            `/dashboard/maintenances/employee/${resp.employee._id}`
           );
         },
         error: (err) => {

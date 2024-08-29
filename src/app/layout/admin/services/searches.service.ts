@@ -8,6 +8,7 @@ import { Store } from '../../../models/store.model';
 import { Product } from '../../../models/product.model';
 import { Employee } from '../../../models/employee.model';
 import { Category } from '../../../models/category.model';
+import { LocalStorageService } from './local-storage.service';
 
 const base_url = environment.BASE_URL;
 @Injectable({
@@ -15,14 +16,17 @@ const base_url = environment.BASE_URL;
 })
 export class SearchesService {
   private http = inject(HttpClient);
+  private localStorageSvc = inject(LocalStorageService);
 
   get headers() {
     return {
-      'x-token': localStorage.getItem('token') || '',
+      headers: {
+        'x-token': this.localStorageSvc.getItem('token') || '',
+      },
     };
   }
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return this.localStorageSvc.getItem('token') || '';
   }
 
   private transformUsers(results: any[]): User[] {
@@ -51,7 +55,7 @@ export class SearchesService {
       (employee) =>
         new Employee(
           employee.name,
-          employee.id,
+          employee._id,
           employee.img,
           employee.user,
           employee.store
@@ -88,9 +92,25 @@ export class SearchesService {
     );
   }
 
+  globalSearch(term: string) {
+    const url = `${base_url}/all/${term}`;
+    // return this.http.get<any[]>(url, this.headers);
+    return this.http.get<any[]>(url, this.headers).pipe(
+      map((resp: any) => {
+        return {
+          users: this.transformUsers(resp.users),
+          stores: this.transformStores(resp.stores),
+          employees: this.transformEmployees(resp.employees),
+          // products: this.transformProducts(resp.products),
+          // categories: this.transformCategories(resp.categories),
+        };
+      })
+    );
+  }
+
   search(type: AdminTypes, term: string) {
-    const url = `${base_url}/todo/collection/${type}/${term}`;
-    return this.http.get<any[]>(url, { headers: this.headers }).pipe(
+    const url = `${base_url}/all/collection/${type}/${term}`;
+    return this.http.get<any[]>(url, this.headers).pipe(
       map((resp: any) => {
         switch (type) {
           case AdminTypes.users:
@@ -99,10 +119,10 @@ export class SearchesService {
             return this.transformStores(resp.results);
           case AdminTypes.employees:
             return this.transformEmployees(resp.results);
-          case AdminTypes.products:
-            return this.transformProducts(resp.results);
-          case AdminTypes.categories:
-            return this.transformCategories(resp.results);
+          // case AdminTypes.products:
+          //   return this.transformProducts(resp.results);
+          // case AdminTypes.categories:
+          //   return this.transformCategories(resp.results);
           default:
             return [];
         }

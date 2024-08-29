@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AdminTypes } from '../../../enums/admin';
+import { LocalStorageService } from './local-storage.service';
 
 const base_url = environment.BASE_URL;
 
@@ -8,6 +9,8 @@ const base_url = environment.BASE_URL;
   providedIn: 'root',
 })
 export class UploadFileService {
+  private localStorageSvc = inject(LocalStorageService);
+
   constructor() {}
 
   async uploadFile(file: File, type: AdminTypes, id: string) {
@@ -20,7 +23,7 @@ export class UploadFileService {
       const resp = await fetch(url, {
         method: 'PUT',
         headers: {
-          'x-token': localStorage.getItem('token') || '',
+          'x-token': this.localStorageSvc.getItem('token') || '',
         },
         body: formData,
       });

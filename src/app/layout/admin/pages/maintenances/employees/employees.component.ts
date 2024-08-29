@@ -146,7 +146,6 @@ export class EmployeesComponent implements OnInit, OnDestroy {
 
   openModal(employee: Employee) {
     console.log(employee);
-
     this.imageModalSvc.openModal(
       AdminTypes.employees,
       employee._id,

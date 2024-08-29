@@ -19,6 +19,12 @@ body{
   border-radius: 50%;
 }
 
+.img-avatar-search{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
 .w100{
   width: 100px;
 }
@@ -85,4 +91,12 @@ z-index: 9999;
 .image-container img {
   display: block;
   margin: 0 auto; /* Asegura que la imagen esté centrada */
+}
+
+.space-letter {
+  letter-spacing: 0.15rem;
+}
+
+.title-user {
+  font-size: 1.7rem;
 }
