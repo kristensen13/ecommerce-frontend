@@ -7,5 +7,5 @@ export const environment = {
     GET_ALL_CATEGORIES: 'categories',
     GET_ALL_USERS: 'users',
   },
-  BASE_URL: 'http://localhost:3000/api',
+  BASE_URL: 'https://backend-ecommerce-416c10ddf5d8.herokuapp.com/api',
 };
