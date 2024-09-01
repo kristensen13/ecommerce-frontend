@@ -1,0 +1,21 @@
+.pad-all{
+  padding-left: 7rem;
+  padding-right: 7rem;
+  padding-top: 3rem;
+}
+
+/* Padding para pantallas más grandes (tabletas y dispositivos más pequeños) */
+@media (max-width: 1024px) {
+  .pad-all {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* Padding para pantallas de móviles (dispositivos más pequeños) */
+@media (max-width: 768px) {
+  .pad-all {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

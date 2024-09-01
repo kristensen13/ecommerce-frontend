@@ -73,8 +73,8 @@ export class LoginComponent implements AfterViewInit {
   }
 
   public loginForm: any = this.fb.group({
-    email: ['liam_amaru@gmail.com', [Validators.required, Validators.email]],
-    password: ['123456', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   });
 
   onLogin() {

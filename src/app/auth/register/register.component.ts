@@ -25,10 +25,10 @@ export class RegisterComponent {
   public formSubmited = false;
   public registerForm: any = this.fb.group(
     {
-      name: ['Wilson', [Validators.required, Validators.minLength(3)]],
-      email: ['wilson@gmail.com', [Validators.required, Validators.email]],
-      password: ['123456', Validators.required],
-      confirmPassword: ['123456', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       terms: [true, Validators.requiredTrue],
     },
     {
@@ -39,7 +39,6 @@ export class RegisterComponent {
   createUser() {
     this.formSubmited = true;
     console.log(this.registerForm.value);
-    // console.log(this.registerForm);
 
     if (this.registerForm.invalid) {
       return;
@@ -50,7 +49,7 @@ export class RegisterComponent {
     this.userSvc.createUser(this.registerForm.value).subscribe({
       next: (resp) => {
         console.log('user created', resp);
-        // Swal.fire('Success', 'User created successfully', 'success');
+        Swal.fire('Success', 'User created successfully', 'success');
         this.router.navigateByUrl('/dashboard');
       },
       error: (err) => {
